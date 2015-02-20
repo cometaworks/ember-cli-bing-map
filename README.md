@@ -1,25 +1,16 @@
 # Ember-cli-bing-map
 
-This README outlines the details of collaborating on this Ember addon.
-
 ## Installation
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+```
+ember install:addon ember-cli-bing-map
+``` 
 
-## Running
+## Usage
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+The component should take the style properties from its parent.
 
-## Running Tests
-
-* `ember test`
-* `ember test --server`
-
-## Building
-
-* `ember build`
-
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
+```
+<div style="position: relative; width: 700px; height: 700px">
+  {{bing-map}}
+</div>```
