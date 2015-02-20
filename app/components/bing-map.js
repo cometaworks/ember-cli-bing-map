@@ -44,7 +44,6 @@ export default Ember.Component.extend({
 
     let getMarker = this.get('getMarker');
     this.map = new Microsoft.Maps.Map(el, opts);
-<<<<<<< HEAD
     let thisMap = this.map;
 
     getMarker.forEach(function(location){
@@ -52,10 +51,6 @@ export default Ember.Component.extend({
       thisMap.entities.push(marker)//add marker to map
     })
 
-
-=======
-    this.map.entities.push(this.getMarker()); //add marker to map
->>>>>>> b2326d1cd8335eccae1c972fd7cdb8789fa0cb88
   }.on('didInsertElement'),
 
   removeMap: function() {
@@ -64,7 +59,6 @@ export default Ember.Component.extend({
 
 
   getMarker: function(){
-<<<<<<< HEAD
     let markers = this.get('markers');
     let location = [];
 
@@ -75,13 +69,7 @@ export default Ember.Component.extend({
     })
     return location;    
   }.property()
-=======
-    let lat = 38;
-    let lng = -95;
-    let markerLocation = new Microsoft.Maps.Location(lat, lng);
-    let marker = new Microsoft.Maps.Pushpin(markerLocation);
-    return marker;    
-  }  
->>>>>>> b2326d1cd8335eccae1c972fd7cdb8789fa0cb88
+
+
 
 });
