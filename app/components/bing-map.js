@@ -6,8 +6,13 @@ export default Ember.Component.extend({
   lat: 38.88333,
   lng: -95.0167,
   zoom: 4,
-  markers: null, // this should be an array
   mapTypeId: 'r', // r:road, a:aerial
+  markers: [
+    {
+      lat:null, // add markers locations
+      lng:null  // to add another marker, simply create a new object inside
+    },          // marker array
+  ],
 
   init() {
     this._super();
@@ -35,24 +40,35 @@ export default Ember.Component.extend({
 
   createMap: function() {
     let el = this.$()[0];
-    console.log(el);
     let opts = this.get('mapOptions');
+
+    let getMarker = this.get('getMarker');
     this.map = new Microsoft.Maps.Map(el, opts);
-    this.map.entities.push(this.get('getMarker')); //add marker to map
+    let thisMap = this.map;
+
+    getMarker.forEach(function(location){
+      let marker = new Microsoft.Maps.Pushpin(location);
+      thisMap.entities.push(marker)//add marker to map
+    })
+
+
   }.on('didInsertElement'),
 
   removeMap: function() {
     this.map.dispose();
   }.on('willDestroyElement'),
 
-// create marker 
-// change lat & lng values
+
   getMarker: function(){
-    var lat = null;
-    var lng = null;
-    var markerLocation = new Microsoft.Maps.Location(lat, lng);
-    var marker = new Microsoft.Maps.Pushpin(markerLocation);
-    return marker;    
-  }.property()  
+    let markers = this.get('markers');
+    let location = [];
+
+    this.get('markers').forEach(function(marker){
+      let lat = marker.lat;
+      let lng = marker.lng;
+      location.push(new Microsoft.Maps.Location(lat, lng));
+    })
+    return location;    
+  }.property()
 
 });
