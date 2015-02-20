@@ -38,10 +38,21 @@ export default Ember.Component.extend({
     console.log(el);
     let opts = this.get('mapOptions');
     this.map = new Microsoft.Maps.Map(el, opts);
+    this.map.entities.push(this.get('getMarker')); //add marker to map
   }.on('didInsertElement'),
 
   removeMap: function() {
     this.map.dispose();
-  }.on('willDestroyElement')
+  }.on('willDestroyElement'),
+
+// create marker 
+// change lat & lng values
+  getMarker: function(){
+    var lat = null;
+    var lng = null;
+    var markerLocation = new Microsoft.Maps.Location(lat, lng);
+    var marker = new Microsoft.Maps.Pushpin(markerLocation);
+    return marker;    
+  }.property()  
 
 });
