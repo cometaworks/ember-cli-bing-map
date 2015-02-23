@@ -30,12 +30,9 @@ export default Ember.Component.extend({
   }.property('lat', 'lng'),
 
   mapOptions: function() {
-    return {
-      center: this.get('center'),
-      zoom: this.zoom,
-      mapTypeId: this.mapTypeId,
-      credentials: config.bingAPI
-    };
+    let opts = this.getProperties('center', 'zoom', 'mapTypeId');
+    opts.credentials = config.bingAPI;
+    return opts;
   }.property('center', 'zoom', 'mapTypeId'),
 
   createMap: function() {
@@ -44,12 +41,11 @@ export default Ember.Component.extend({
 
     let getMarker = this.get('getMarker');
     this.map = new Microsoft.Maps.Map(el, opts);
-    let thisMap = this.map;
 
-    getMarker.forEach(function(location){
+    getMarker.forEach((location) => {
       let marker = new Microsoft.Maps.Pushpin(location);
-      thisMap.entities.push(marker)//add marker to map
-    })
+      this.map.entities.push(marker); //add marker to map
+    });
 
   }.on('didInsertElement'),
 
@@ -62,11 +58,12 @@ export default Ember.Component.extend({
     let markers = this.get('markers');
     let location = [];
 
-    this.get('markers').forEach(function(marker){
+    this.get('markers').forEach((marker) => {
       let lat = marker.lat;
       let lng = marker.lng;
       location.push(new Microsoft.Maps.Location(lat, lng));
     })
+
     return location;    
   }.property()
 
