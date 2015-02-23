@@ -3,9 +3,9 @@ import config from '../config/environment';
 
 export default Ember.Component.extend({
   classNames: ['bing-map'],
-  lat: 38.88333,
-  lng: -95.0167,
-  zoom: 4,
+  lat: 0,
+  lng: 0,
+  zoom: 0,
   mapTypeId: 'r', // r:road, a:aerial
   markers: [
     {
@@ -13,6 +13,25 @@ export default Ember.Component.extend({
       lng:null  // to add another marker, simply create a new object inside
     },          // marker array
   ],
+
+  polygonLocation: {
+    location1:{
+      lat:null,     //add lat and lng values to use to create polygon around location
+      lng:null 
+    }, 
+    location2:{
+      lat:null,
+      lng:null 
+    }, 
+    location3:{
+      lat: null,
+      lng: null 
+    }, 
+    location4:{
+      lat: null,
+      lng: null 
+    }, 
+  },
 
   init() {
     this._super();
@@ -45,6 +64,7 @@ export default Ember.Component.extend({
     getMarker.forEach((location) => {
       let marker = new Microsoft.Maps.Pushpin(location);
       this.map.entities.push(marker); //add marker to map
+      this.map.entities.push(this.get('createPolygon'));
     });
 
   }.on('didInsertElement'),
@@ -62,8 +82,21 @@ export default Ember.Component.extend({
       let lng = marker.lng;
       location.push(new Microsoft.Maps.Location(lat, lng));
     })
-
     return location;    
-  }.property()
+  }.property(),
+
+    createPolygon: function(){
+      let polygonLocation = this.get('polygonLocation');
+
+      let location1 = new Microsoft.Maps.Location(polygonLocation.location1.lat, polygonLocation.location1.lng);
+      let location2 = new Microsoft.Maps.Location(polygonLocation.location2.lat, polygonLocation.location2.lng);
+      let location3 = new Microsoft.Maps.Location(polygonLocation.location3.lat, polygonLocation.location3.lng);
+      let location4 = new Microsoft.Maps.Location(polygonLocation.location4.lat, polygonLocation.location4.lng);
+
+      let vertices = new Array(location1, location2, location3, location4, location1);
+      let polygoncolor = new Microsoft.Maps.Color(100,100,0,100);
+      let polygon = new Microsoft.Maps.Polygon(vertices,{fillColor: polygoncolor, strokeColor: polygoncolor});
+      return polygon;
+    }.property()
 
 });
