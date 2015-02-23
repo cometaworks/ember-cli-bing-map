@@ -85,18 +85,18 @@ export default Ember.Component.extend({
     return location;    
   }.property(),
 
-    createPolygon: function(){
-      let polygonLocation = this.get('polygonLocation');
+  createPolygon: function(){
+    let polygonLocation = this.get('polygonLocation');
 
-      let location1 = new Microsoft.Maps.Location(polygonLocation.location1.lat, polygonLocation.location1.lng);
-      let location2 = new Microsoft.Maps.Location(polygonLocation.location2.lat, polygonLocation.location2.lng);
-      let location3 = new Microsoft.Maps.Location(polygonLocation.location3.lat, polygonLocation.location3.lng);
-      let location4 = new Microsoft.Maps.Location(polygonLocation.location4.lat, polygonLocation.location4.lng);
+    let location1 = new Microsoft.Maps.Location(polygonLocation.location1.lat, polygonLocation.location1.lng);
+    let location2 = new Microsoft.Maps.Location(polygonLocation.location2.lat, polygonLocation.location2.lng);
+    let location3 = new Microsoft.Maps.Location(polygonLocation.location3.lat, polygonLocation.location3.lng);
+    let location4 = new Microsoft.Maps.Location(polygonLocation.location4.lat, polygonLocation.location4.lng);
 
-      let vertices = new Array(location1, location2, location3, location4, location1);
-      let polygoncolor = new Microsoft.Maps.Color(100,100,0,100);
-      let polygon = new Microsoft.Maps.Polygon(vertices,{fillColor: polygoncolor, strokeColor: polygoncolor});
-      return polygon;
-    }.property()
+    let vertices = new Array(location1, location2, location3, location4, location1);
+    let polygoncolor = new Microsoft.Maps.Color(100,100,0,100);
+    let polygon = new Microsoft.Maps.Polygon(vertices,{fillColor: polygoncolor, strokeColor: polygoncolor});
+    return polygon;
+  }.property()
 
 });
