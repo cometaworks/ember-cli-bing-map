@@ -53,7 +53,6 @@ export default Ember.Component.extend({
     this.map.dispose();
   }.on('willDestroyElement'),
 
-
   getMarker: function(){
     let markers = this.get('markers');
     let location = [];
@@ -66,7 +65,5 @@ export default Ember.Component.extend({
 
     return location;    
   }.property()
-
-
 
 });
