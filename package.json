@@ -1,7 +1,7 @@
 {
   "name": "ember-cli-bing-map",
-  "version": "0.0.1",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.0.3",
+  "description": "A bing map component.",
   "directories": {
     "doc": "doc",
     "test": "tests"
