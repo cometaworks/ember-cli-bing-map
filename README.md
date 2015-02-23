@@ -12,7 +12,7 @@ The component should take the style properties from its parent.
 
 ```
 <div style="position: relative; width: 700px; height: 700px">
-  {{bing-map lat=lat lng=lng zoom=zoom mapTypeId=mapTypeId markers=markers}}
+  {{bing-map lat=lat lng=lng zoom=zoom mapTypeId=mapTypeId markers=markers polygonLocation=polygonObject}}
 </div>
 
 ```
