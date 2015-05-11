@@ -3,9 +3,9 @@ import config from '../config/environment';
 
 export default Ember.Component.extend({
   classNames: ['bing-map'],
-  lat: 0,
-  lng: 0,
-  zoom: 0,
+  lat: 30.1,
+  lng: -81.4,
+  zoom: 10,
   mapTypeId: 'r', // r:road, a:aerial
   markers: [
     {
@@ -16,20 +16,20 @@ export default Ember.Component.extend({
 
   polygonLocation: {
     location1:{
-      lat:null,     //add lat and lng values to use to create polygon around location
-      lng:null 
+      lat:30.1,
+      lng: -81.6 
     }, 
     location2:{
-      lat:null,
-      lng:null 
+      lat:30.1,
+      lng:-81.4 
     }, 
     location3:{
-      lat: null,
-      lng: null 
+      lat:30,
+      lng: -81.4 
     }, 
     location4:{
-      lat: null,
-      lng: null 
+      lat: 30,
+      lng: -81.6 
     }, 
   },
 
@@ -43,8 +43,8 @@ export default Ember.Component.extend({
   },
 
   center: function() {
-    let latitude = this.lat;
-    let longitude = this.api.Location.normalizeLongitude(this.lng);
+    let latitude = this.get('lat');
+    let longitude = this.api.Location.normalizeLongitude(this.get('lng'));
     return new this.api.Location(latitude, longitude);
   }.property('lat', 'lng'),
 
@@ -74,14 +74,11 @@ export default Ember.Component.extend({
   }.on('willDestroyElement'),
 
   getMarker: function(){
-    let markers = this.get('markers');
-    let location = [];
-
-    this.get('markers').forEach((marker) => {
-      let lat = marker.lat;
-      let lng = marker.lng;
+      let location=[];
+      let lat = this.lat;
+      let lng = this.lng;
       location.push(new Microsoft.Maps.Location(lat, lng));
-    })
+
     return location;    
   }.property(),
 
@@ -96,6 +93,7 @@ export default Ember.Component.extend({
       let vertices = new Array(location1, location2, location3, location4, location1);
       let polygoncolor = new Microsoft.Maps.Color(100,100,0,100);
       let polygon = new Microsoft.Maps.Polygon(vertices,{fillColor: polygoncolor, strokeColor: polygoncolor});
+      console.log(polygonLocation, polygonLocation.location1.lat, polygonLocation.location1.lng);
       return polygon;
     }.property()
 
