@@ -42,17 +42,25 @@ export default Ember.Component.extend({
     this.map = null;
   },
 
-  center: function() {
+  didInsertElement() {
+    this.createMap();
+  },
+
+  willDestroyElement() {
+    this.removeMap();
+  },
+
+  center: Ember.computed('lat', 'lng', function() {
     let latitude = this.get('lat');
     let longitude = this.api.Location.normalizeLongitude(this.get('lng'));
     return new this.api.Location(latitude, longitude);
-  }.property('lat', 'lng'),
+  }),
 
-  mapOptions: function() {
+  mapOptions: Ember.computed('center', 'zoom', 'mapTypeId', function() {
     let opts = this.getProperties('center', 'zoom', 'mapTypeId');
     opts.credentials = config.bingAPI;
     return opts;
-  }.property('center', 'zoom', 'mapTypeId'),
+  }),
 
   createMap: function() {
     let el = this.$()[0];
@@ -67,34 +75,34 @@ export default Ember.Component.extend({
       this.map.entities.push(this.get('createPolygon'));
     });
 
-  }.on('didInsertElement'),
+  },
 
   removeMap: function() {
     this.map.dispose();
-  }.on('willDestroyElement'),
+  },
 
-  getMarker: function(){
+  getMarker: Ember.computed(function(){
       let location=[];
       let lat = this.lat;
       let lng = this.lng;
       location.push(new Microsoft.Maps.Location(lat, lng));
 
     return location;    
-  }.property(),
+  }),
 
-    createPolygon: function(){
-      let polygonLocation = this.get('polygonLocation');
+  createPolygon: Ember.computed(function(){
+    let polygonLocation = this.get('polygonLocation');
 
-      let location1 = new Microsoft.Maps.Location(polygonLocation.location1.lat, polygonLocation.location1.lng);
-      let location2 = new Microsoft.Maps.Location(polygonLocation.location2.lat, polygonLocation.location2.lng);
-      let location3 = new Microsoft.Maps.Location(polygonLocation.location3.lat, polygonLocation.location3.lng);
-      let location4 = new Microsoft.Maps.Location(polygonLocation.location4.lat, polygonLocation.location4.lng);
+    let location1 = new Microsoft.Maps.Location(polygonLocation.location1.lat, polygonLocation.location1.lng);
+    let location2 = new Microsoft.Maps.Location(polygonLocation.location2.lat, polygonLocation.location2.lng);
+    let location3 = new Microsoft.Maps.Location(polygonLocation.location3.lat, polygonLocation.location3.lng);
+    let location4 = new Microsoft.Maps.Location(polygonLocation.location4.lat, polygonLocation.location4.lng);
 
-      let vertices = new Array(location1, location2, location3, location4, location1);
-      let polygoncolor = new Microsoft.Maps.Color(100,100,0,100);
-      let polygon = new Microsoft.Maps.Polygon(vertices,{fillColor: polygoncolor, strokeColor: polygoncolor});
-      console.log(polygonLocation, polygonLocation.location1.lat, polygonLocation.location1.lng);
-      return polygon;
-    }.property()
+    let vertices = new Array(location1, location2, location3, location4, location1);
+    let polygoncolor = new Microsoft.Maps.Color(100,100,0,100);
+    let polygon = new Microsoft.Maps.Polygon(vertices,{fillColor: polygoncolor, strokeColor: polygoncolor});
+    console.log(polygonLocation, polygonLocation.location1.lat, polygonLocation.location1.lng);
+    return polygon;
+  })
 
 });
