@@ -13,7 +13,7 @@ module.exports = function(environment) {
       }
     },
 
-    bingAPI: 'INSERT_API_KEY',
+    bingAPI: 'INSERT BING API',
 
     APP: {
       // Here you can pass flags/options to your application instance
