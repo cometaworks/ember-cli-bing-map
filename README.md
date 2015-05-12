@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-ember install:addon ember-cli-bing-map
+ember install ember-cli-bing-map
 ``` 
 
 ## Usage
