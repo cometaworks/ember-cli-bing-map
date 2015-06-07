@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-bing-map",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A bing map component for Ember-cli",
   "directories": {
     "doc": "doc",
