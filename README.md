@@ -1,25 +1,31 @@
 # Ember-cli-bing-map
 
-This README outlines the details of collaborating on this Ember addon.
-
 ## Installation
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+```
+ember install ember-cli-bing-map
+``` 
 
-## Running
+## Usage
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+The component should take the style properties from its parent.
 
-## Running Tests
+```
+<div style="position: relative; width: 700px; height: 700px">
+  {{bing-map lat=lat lng=lng zoom=zoom mapTypeId=mapTypeId markers=markers polygonLocation=polygonObject}}
+</div>
 
-* `ember test`
-* `ember test --server`
+```
+Add reference to the map control in the index.html.
 
-## Building
+```
+<script charset="UTF-8" type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+```
+Add Bing API to environment.js.
 
-* `ember build`
+```
+bingAPI: 'API-KEY',
+```
 
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
+
+
