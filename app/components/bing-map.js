@@ -9,6 +9,13 @@ export default Ember.Component.extend({
   zoom: 10,
   mapTypeId: 'r', // r:road, a:aerial
   markers: null,
+  
+  fillColor: function(){
+    return new Microsoft.Maps.Color(100,100,0,100);
+  },
+  strokeColor: function(){
+    return new Microsoft.Maps.Color(100,100,0,100);
+  },
 
   polygonLocation: null,
 
@@ -90,8 +97,9 @@ export default Ember.Component.extend({
       let location4 = new Microsoft.Maps.Location(polygonLocation.location4.lat, polygonLocation.location4.lng);
 
       let vertices = new Array(location1, location2, location3, location4, location1);
-      let polygoncolor = new Microsoft.Maps.Color(100,100,0,100);
-      let polygon = new Microsoft.Maps.Polygon(vertices,{fillColor: polygoncolor, strokeColor: polygoncolor});
+      let fillColor = this.fillColor();
+      let strokeColor = this.strokeColor();
+      let polygon = new Microsoft.Maps.Polygon(vertices,{fillColor: fillColor, strokeColor: strokeColor});
       return polygon;
     } else {
       return null;

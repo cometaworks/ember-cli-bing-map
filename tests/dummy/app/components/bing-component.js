@@ -1,3 +1,4 @@
+/* global Microsoft */
 import Ember from 'ember';
 import layout from '../templates/components/bing-component';
 
@@ -30,6 +31,14 @@ export default Ember.Component.extend({
     location4:{
       lat: 18.15,
       lng: -66.3
-    },
+    }
+  },
+
+  fillColor: function(){
+    return new Microsoft.Maps.Color(100,100,0,100);
+  },
+
+  strokeColor: function(){
+    return new Microsoft.Maps.Color(100,100,0,100);
   }
 });
