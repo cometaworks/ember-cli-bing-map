@@ -78,3 +78,7 @@ example:
     },
   }
 ```
+
+## Demo
+
+[Demo](https://cometaworks.github.io/ember-cli-bing-map/)
