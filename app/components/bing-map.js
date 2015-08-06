@@ -4,35 +4,13 @@ import config from '../config/environment';
 
 export default Ember.Component.extend({
   classNames: ['bing-map'],
-  lat: 30.1,
-  lng: -81.4,
+  lat: 0,
+  lng: 0,
   zoom: 10,
   mapTypeId: 'r', // r:road, a:aerial
-  markers: [
-    {
-      lat: null, // add markers locations
-      lng: null  // to add another marker, simply add a new object inside
-    }          // marker array
-  ],
+  markers: null,
 
-  polygonLocation: {
-    location1:{
-      lat:30.1,
-      lng: -81.6
-    }, 
-    location2:{
-      lat:30.1,
-      lng:-81.4
-    },
-    location3:{
-      lat:30,
-      lng: -81.4
-    },
-    location4:{
-      lat: 30,
-      lng: -81.6
-    },
-  },
+  polygonLocation: null,
 
   init() {
     this._super();
@@ -69,13 +47,19 @@ export default Ember.Component.extend({
     let opts = this.get('mapOptions');
 
     let getMarker = this.get('getMarker');
+    let polygon = this.createPolygon;
     this.map = new Microsoft.Maps.Map(el, opts);
 
-    getMarker.forEach((location) => {
-      let marker = new Microsoft.Maps.Pushpin(location);
-      this.map.entities.push(marker); //add marker to map
-    });
-    this.map.entities.push(this.get('createPolygon'));
+    if(getMarker){
+      getMarker.forEach((location) => {
+        let marker = new Microsoft.Maps.Pushpin(location);
+        this.map.entities.push(marker); //add marker to map
+      }); 
+    }
+
+    if(polygon){
+      this.map.entities.push(polygon);
+    }
 
   },
 
@@ -84,27 +68,34 @@ export default Ember.Component.extend({
   },
 
   getMarker: Ember.computed(function(){
-      let location=[];
-      this.get('markers').forEach((marker) => {
-        let lat = marker.lat;
-        let lng = marker.lng;
-        location.push(new Microsoft.Maps.Location(lat,lng));
-      });
-    return location;    
+      if(this.markers){
+        let location=[];
+        this.get('markers').forEach((marker) => {
+          let lat = marker.lat;
+          let lng = marker.lng;
+          location.push(new Microsoft.Maps.Location(lat,lng));
+        });
+        return location;    
+      } else {
+        return null;
+      }
   }),
 
   createPolygon: Ember.computed(function(){
     let polygonLocation = this.get('polygonLocation');
+    if(this.polygonLocation){
+      let location1 = new Microsoft.Maps.Location(polygonLocation.location1.lat, polygonLocation.location1.lng);
+      let location2 = new Microsoft.Maps.Location(polygonLocation.location2.lat, polygonLocation.location2.lng);
+      let location3 = new Microsoft.Maps.Location(polygonLocation.location3.lat, polygonLocation.location3.lng);
+      let location4 = new Microsoft.Maps.Location(polygonLocation.location4.lat, polygonLocation.location4.lng);
 
-    let location1 = new Microsoft.Maps.Location(polygonLocation.location1.lat, polygonLocation.location1.lng);
-    let location2 = new Microsoft.Maps.Location(polygonLocation.location2.lat, polygonLocation.location2.lng);
-    let location3 = new Microsoft.Maps.Location(polygonLocation.location3.lat, polygonLocation.location3.lng);
-    let location4 = new Microsoft.Maps.Location(polygonLocation.location4.lat, polygonLocation.location4.lng);
-
-    let vertices = new Array(location1, location2, location3, location4, location1);
-    let polygoncolor = new Microsoft.Maps.Color(100,100,0,100);
-    let polygon = new Microsoft.Maps.Polygon(vertices,{fillColor: polygoncolor, strokeColor: polygoncolor});
-    return polygon;
+      let vertices = new Array(location1, location2, location3, location4, location1);
+      let polygoncolor = new Microsoft.Maps.Color(100,100,0,100);
+      let polygon = new Microsoft.Maps.Polygon(vertices,{fillColor: polygoncolor, strokeColor: polygoncolor});
+      return polygon;
+    } else {
+      return null;
+    }
   })
 
 });

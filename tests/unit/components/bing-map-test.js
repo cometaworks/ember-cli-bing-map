@@ -177,34 +177,21 @@ test('that map is drawing polygon', function(assert) {
     let map = component.map;
 
     //Locations
-    for( let i=0; i>map.entities.get(1)._locations.length -1; i++ ) {
-      assert.equal(map.entities.get(1)._locations[i].latitude, polygon._locations[i].latitude);
-      assert.equal(map.entities.get(1)._locations[i].longitude, polygon._locations[i].longitude);
+    for( let i=0; i>map.entities.get(0)._locations.length -1; i++ ) {
+      assert.equal(map.entities.get(0)._locations[i].latitude, polygon._locations[i].latitude);
+      assert.equal(map.entities.get(0)._locations[i].longitude, polygon._locations[i].longitude);
     }
 
     //Fill Colors
-    assert.equal(map.entities.get(1)._fillColor.a, polygon._fillColor.a);
-    assert.equal(map.entities.get(1)._fillColor.r, polygon._fillColor.r);
-    assert.equal(map.entities.get(1)._fillColor.g, polygon._fillColor.g);
-    assert.equal(map.entities.get(1)._fillColor.b, polygon._fillColor.b);
+    assert.equal(map.entities.get(0)._fillColor.a, polygon._fillColor.a);
+    assert.equal(map.entities.get(0)._fillColor.r, polygon._fillColor.r);
+    assert.equal(map.entities.get(0)._fillColor.g, polygon._fillColor.g);
+    assert.equal(map.entities.get(0)._fillColor.b, polygon._fillColor.b);
 
     //Stroke Color
-    assert.equal(map.entities.get(1)._strokeColor.a, polygon._strokeColor.a);
-    assert.equal(map.entities.get(1)._strokeColor.r, polygon._strokeColor.r);
-    assert.equal(map.entities.get(1)._strokeColor.g, polygon._strokeColor.g);
-    assert.equal(map.entities.get(1)._strokeColor.b, polygon._strokeColor.b);
+    assert.equal(map.entities.get(0)._strokeColor.a, polygon._strokeColor.a);
+    assert.equal(map.entities.get(0)._strokeColor.r, polygon._strokeColor.r);
+    assert.equal(map.entities.get(0)._strokeColor.g, polygon._strokeColor.g);
+    assert.equal(map.entities.get(0)._strokeColor.b, polygon._strokeColor.b);
   });
 });
-
-// test('that credentials are being successfully assigned', function(assert) {
-//   let component = this.subject();
-//  this.render();
-//   let map = component.map;
-//   debugger;
-// });
-
-
-
-
-
-
