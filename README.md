@@ -1,5 +1,7 @@
 # Ember-cli-bing-map
 
+Simple bing map component for ember-cli
+
 ## Installation
 
 ```
@@ -27,5 +29,52 @@ Add Bing API to environment.js.
 bingAPI: 'API-KEY',
 ```
 
+## Entities
 
+Current available entities:
 
+`lat` - `number value` 
+
+`lng` - `number value`
+
+`zoom` - `integer up to 20`
+
+`mapTypeId` - `string value: 'a' for aerial view, 'r' for road view `
+
+`markers` - `array of objects with lat and lng values`
+
+example:
+
+```
+markers: [
+  {
+    lat: 18.35570,
+    lng: -66.004951
+  }
+]
+```
+
+`polygonLocation`
+
+example:
+
+```
+  polygonLocation: {
+    location1:{
+      lat: 18.5,
+      lng: -66.3
+    }, 
+    location2:{
+      lat:18.5,
+      lng:-65.9
+    },
+    location3:{
+      lat: 18.15,
+      lng: -65.9
+    },
+    location4:{
+      lat: 18.15,
+      lng: -66.3
+    },
+  }
+```
