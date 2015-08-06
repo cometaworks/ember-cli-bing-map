@@ -25,14 +25,13 @@ test('it renders', function(assert) {
 
 test('that map coordinates are equal to the ones assigned', function(assert) {
   let component = this.subject();
-  let $component = this.append();
+  this.render();
 
 
   Ember.run(function() {
     component.set('lat', 18.4500);
     component.set('lng', 66.1000);
     component.createMap();  
-    let map = component.map;
     assert.equal(component.lat, 18.4500);
     assert.equal(component.lng, 66.1000);
   });
@@ -47,7 +46,7 @@ test('that a single marker is being displayed in map', function(assert) {
       lng: -66.1000
     }
     ]);           
-  let $component = this.append();
+  this.render();
   Ember.run(function() {   
     let map = component.map;
     assert.equal(component.get('getMarker')[0].latitude, location.latitude);
@@ -78,7 +77,7 @@ test('that multiple markers are displayed in map', function(assert) {
     }
     ]);
 
-  let $component = this.append();
+  this.render();
 
   Ember.run(function() {
     let map = component.map;
@@ -99,7 +98,7 @@ test('that multiple markers are displayed in map', function(assert) {
 
 test("that the map's center", function(assert) {
   let component = this.subject();
-  let $component = this.append();  
+  this.render();  
   Ember.run(function() {
     component.set('lat', 18.2146); 
     component.set('lng', -66.0103);
@@ -115,7 +114,7 @@ test("that the map's center", function(assert) {
 test('that map option equal to zoom', function(assert) {
   let component = this.subject();
   component.zoom = 5;
-  let $component = this.append();
+  this.render();
 
   Ember.run(function() {
     let map = component.map;
@@ -129,7 +128,7 @@ test('that map option equal to zoom', function(assert) {
 test('that map option equal to mapTypeId', function(assert) {
   let component = this.subject();
   component.mapTypeId = 'a';
-  let $component = this.append();
+  this.render();
 
   Ember.run(function() {
     let map = component.map;
@@ -161,7 +160,7 @@ test('that map is drawing polygon', function(assert) {
     }
   });
 
-  let $component = this.append();
+  this.render();
 
   Ember.run( function() {
     let polygonLocation = component.polygonLocation;
@@ -199,7 +198,7 @@ test('that map is drawing polygon', function(assert) {
 
 // test('that credentials are being successfully assigned', function(assert) {
 //   let component = this.subject();
-//   let $component = this.append();
+//  this.render();
 //   let map = component.map;
 //   debugger;
 // });
