@@ -47,7 +47,7 @@ export default Ember.Component.extend({
     let opts = this.get('mapOptions');
 
     let getMarker = this.get('getMarker');
-    let polygon = this.createPolygon;
+    let polygon = this.get('createPolygon');
     this.map = new Microsoft.Maps.Map(el, opts);
 
     if(getMarker){
