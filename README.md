@@ -81,4 +81,4 @@ example:
 
 ## Demo
 
-[Demo](https://cometaworks.github.io/ember-cli-bing-map/)
+[Demo](http://cometaworks.github.io/ember-cli-bing-map/)
