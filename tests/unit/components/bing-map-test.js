@@ -5,7 +5,13 @@ import {
   test
 } from 'ember-qunit';
 
+function latRandomizer(){
+  return (Math.random() * 181) - 90;
+}
 
+function lngRandomizer() {
+  return (Math.random() * 281) -180;
+}
 
 moduleForComponent('bing-map', {
   // Specify the other units that are required for this test
@@ -29,21 +35,25 @@ test('that map coordinates are equal to the ones assigned', function(assert) {
 
 
   Ember.run(function() {
-    component.set('lat', 18.4500);
-    component.set('lng', 66.1000);
+    let lat = latRandomizer();
+    let lng = lngRandomizer();
+    component.set('lat', lat);
+    component.set('lng', lng);
     component.createMap();  
-    assert.equal(component.lat, 18.4500);
-    assert.equal(component.lng, 66.1000);
+    assert.equal(component.lat, lat);
+    assert.equal(component.lng, lng);
   });
 });
 
 test('that a single marker is being displayed in map', function(assert) {
   let component = this.subject();
-  let location = new Microsoft.Maps.Location(18.4500, -66.1000);     
+  let lat = latRandomizer();
+  let lng = lngRandomizer();
+  let location = new Microsoft.Maps.Location(lat, lng);     
   component.set('markers', [
     {
-      lat: 18.4500,
-      lng: -66.1000
+      lat: lat,
+      lng: lng
     }
     ]);           
   this.render();
@@ -59,21 +69,27 @@ test('that a single marker is being displayed in map', function(assert) {
 
 test('that multiple markers are displayed in map', function(assert) {
   let component = this.subject();
-  let location1 = new Microsoft.Maps.Location(18.4500, -66.1000);
-  let location2 = new Microsoft.Maps.Location(-18.2146, 66.0103);
-  let location3 = new Microsoft.Maps.Location(0, 0);
+  let lats = [];
+  let lngs = [];
+  for(let i=0; i < 3; i++){
+    lats.push(latRandomizer());
+    lngs.push(lngRandomizer());
+  }
+  let location1 = new Microsoft.Maps.Location(lats[0], lngs[0]);
+  let location2 = new Microsoft.Maps.Location(lats[1], lngs[1]);
+  let location3 = new Microsoft.Maps.Location(lats[2], lngs[2]);
   component.set('markers', [
     {
-      lat: 18.4500,
-      lng: -66.1000
+      lat: lats[0],
+      lng: lngs[0]
     },
     {
-      lat: -18.2146, 
-      lng: 66.0103
+      lat: lats[1], 
+      lng: lngs[1]
     },
     {
-      lat: 0,
-      lng: 0
+      lat: lats[2],
+      lng: lngs[2]
     }
     ]);
 
@@ -100,14 +116,14 @@ test("that the map's center", function(assert) {
   let component = this.subject();
   this.render();  
   Ember.run(function() {
-    component.set('lat', 18.2146); 
-    component.set('lng', -66.0103);
+    component.set('lat', latRandomizer()); 
+    component.set('lng', lngRandomizer());
     component.createMap();
     let map = component.get('map');
     assert.equal(component.get('mapOptions').center.latitude, component.lat);
     assert.equal(component.get('mapOptions').center.longitude, component.lng);
-    assert.equal(map.getCenter().latitude.toFixed(4), component.lat);
-    assert.equal(map.getCenter().longitude.toFixed(4), component.lng);
+    assert.equal(map.getCenter().latitude.toFixed(4), component.lat.toFixed(4));
+    assert.equal(map.getCenter().longitude.toFixed(4), component.lng.toFixed(4));
   });
 });
 
@@ -127,38 +143,43 @@ test('that map option equal to zoom', function(assert) {
 
 test('that map option equal to mapTypeId', function(assert) {
   let component = this.subject();
-  component.mapTypeId = 'a';
+  let mapTypeIdArr = ['a', 'r'];
+  let mapTypeId = mapTypeIdArr[Math.floor(Math.random() * mapTypeIdArr.length)];
+  component.mapTypeId = mapTypeId;
   this.render();
 
   Ember.run(function() {
     let map = component.map;
 
     assert.equal(map.getMapTypeId(), component.mapTypeId);
-    assert.equal(map.getMapTypeId(), 'a');
-    assert.notEqual(map.getMapTypeId(), 'r');
+    assert.equal(map.getMapTypeId(), mapTypeId);
   });
 });
 
-test('that map is drawing polygon', function(assert) {
+test('that map is drawing polygon and changing color', function(assert) {
   let component = this.subject();
   component.set('polygonLocation', {
     location1:{
-      lat: 0,
-      lng: 0
+      lat:latRandomizer(),
+      lng: lngRandomizer()
     },
     location2:{
-      lat:0,
-      lng:1
+      lat:latRandomizer(),
+      lng:lngRandomizer()
     },
     location3:{
-      lat: -1,
-      lng: 1
+      lat:latRandomizer(),
+      lng: lngRandomizer()
     },
     location4:{
-      lat: -1,
-      lng: 0
+      lat:latRandomizer(),
+      lng: lngRandomizer()
     }
   });
+
+  component.set('fillColor', [Math.floor(Math.random() * 250), Math.floor(Math.random() * 250), Math.floor(Math.random() * 250), Math.floor(Math.random() * 250)]);
+
+  component.set('strokeColor', [Math.floor(Math.random() * 250), Math.floor(Math.random() * 250), Math.floor(Math.random() * 250), Math.floor(Math.random() * 250)]);
 
   this.render();
 
@@ -169,8 +190,8 @@ test('that map is drawing polygon', function(assert) {
     let location3 = new Microsoft.Maps.Location(polygonLocation.location3.lat, polygonLocation.location3.lng);
     let location4 = new Microsoft.Maps.Location(polygonLocation.location4.lat, polygonLocation.location4.lng);
     let vertices = new Array(location1, location2, location3, location4, location1);
-    let polygonFillColor = new Microsoft.Maps.Color(150,200,10,150);
-    let polygonStrokeColor = new Microsoft.Maps.Color(50,100,15,50);
+    let polygonFillColor = component.fillColor;
+    let polygonStrokeColor = component.strokeColor;
     let polygon = new Microsoft.Maps.Polygon(vertices,{fillColor: polygonFillColor, strokeColor: polygonStrokeColor});
     component.set('createPolygon', polygon);
     component.createMap();

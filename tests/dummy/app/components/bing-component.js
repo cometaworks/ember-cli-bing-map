@@ -1,4 +1,3 @@
-/* global Microsoft */
 import Ember from 'ember';
 import layout from '../templates/components/bing-component';
 
@@ -34,11 +33,7 @@ export default Ember.Component.extend({
     }
   },
 
-  fillColor: function(){
-    return new Microsoft.Maps.Color(100,100,0,100);
-  },
+  fillColor: [Math.floor(Math.random() * 250), Math.floor(Math.random() * 250), Math.floor(Math.random() * 250), Math.floor(Math.random() * 250)],
 
-  strokeColor: function(){
-    return new Microsoft.Maps.Color(100,100,0,100);
-  }
+  strokeColor: [Math.floor(Math.random() * 250), Math.floor(Math.random() * 250), Math.floor(Math.random() * 250), Math.floor(Math.random() * 250)]
 });
