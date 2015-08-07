@@ -2,6 +2,9 @@
 
 Simple bing map component for ember-cli
 
+[Demo](http://cometaworks.github.io/ember-cli-bing-map/) 
+(Polygon colors are random in this demo)
+
 ## Installation
 
 ```
@@ -33,15 +36,15 @@ bingAPI: 'API-KEY',
 
 Current available entities:
 
-`lat` - `number value` 
+`lat` = `number value` 
 
-`lng` - `number value`
+`lng` = `number value`
 
-`zoom` - `integer up to 20`
+`zoom` = `integer up to 20`
 
-`mapTypeId` - `string value: 'a' for aerial view, 'r' for road view `
+`mapTypeId` = `string value: 'a' for aerial view, 'r' for road view `
 
-`markers` - `array of objects with lat and lng values`
+`markers` = `array of objects with lat and lng values`
 
 example:
 
@@ -54,31 +57,43 @@ markers: [
 ]
 ```
 
-`polygonLocation`
+`polygonLocation` = `object with location objects containing lat and lng values `
 
 example:
 
 ```
-  polygonLocation: {
-    location1:{
-      lat: 18.5,
-      lng: -66.3
-    }, 
-    location2:{
-      lat:18.5,
-      lng:-65.9
-    },
-    location3:{
-      lat: 18.15,
-      lng: -65.9
-    },
-    location4:{
-      lat: 18.15,
-      lng: -66.3
-    },
-  }
+polygonLocation: {
+  location1:{
+    lat: 18.5,
+    lng: -66.3
+  }, 
+  location2:{
+    lat:18.5,
+    lng:-65.9
+  },
+  location3:{
+    lat: 18.15,
+    lng: -65.9
+  },
+  location4:{
+    lat: 18.15,
+    lng: -66.3
+  },
+}
 ```
+_polygonLocation Color properties_:
 
-## Demo
+`fillColor` = `array with a,r,b,g colors`
 
-[Demo](http://cometaworks.github.io/ember-cli-bing-map/)
+`strokeColor` = `array with a,r,b,g colors`
+
+- To use, both properties must have values assigned
+
+- Default value is [100, 100, 0, 100]
+
+example:
+
+```
+fillColor: [100, 100, 0, 100];
+strokeColor: [200, 34, 80, 37];
+```
