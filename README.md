@@ -3,7 +3,7 @@
 Simple bing map component for ember-cli
 
 [Demo](http://cometaworks.github.io/ember-cli-bing-map/) 
-(Polygon colors are random in this demo)
+(Markers, PolygonLocation, and Polygon colors are random in this demo)
 
 ## Installation
 
