@@ -1,4 +1,5 @@
-# Ember-cli-bing-map
+# Ember-cli-bing-map 
+[![Build Status](https://travis-ci.org/cometaworks/ember-cli-bing-map.svg?branch=tests%2Ftravis-ci-build)](https://travis-ci.org/cometaworks/ember-cli-bing-map)
 
 Simple bing map component for ember-cli
 
