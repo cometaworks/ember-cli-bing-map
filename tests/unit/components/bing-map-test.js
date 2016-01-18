@@ -5,12 +5,12 @@ import {
   test
 } from 'ember-qunit';
 
-function latRandomizer(){
+function latRandomizer() {
   return (Math.random() * 181) - 90;
 }
 
 function lngRandomizer() {
-  return (Math.random() * 281) -180;
+  return (Math.random() * 281) - 180;
 }
 
 moduleForComponent('bing-map', {
@@ -33,13 +33,12 @@ test('that map coordinates are equal to the ones assigned', function(assert) {
   let component = this.subject();
   this.render();
 
-
   Ember.run(function() {
     let lat = latRandomizer();
     let lng = lngRandomizer();
     component.set('lat', lat);
     component.set('lng', lng);
-    component.createMap();  
+    component.createMap();
     assert.equal(component.lat, lat);
     assert.equal(component.lng, lng);
   });
@@ -49,15 +48,15 @@ test('that a single marker is being displayed in map', function(assert) {
   let component = this.subject();
   let lat = latRandomizer();
   let lng = lngRandomizer();
-  let location = new Microsoft.Maps.Location(lat, lng);     
+  let location = new Microsoft.Maps.Location(lat, lng);
   component.set('markers', [
     {
       lat: lat,
-      lng: lng
-    }
-    ]);           
+      lng: lng,
+    },
+    ]);
   this.render();
-  Ember.run(function() {   
+  Ember.run(function() {
     let map = component.map;
     assert.equal(component.get('getMarker')[0].latitude, location.latitude);
     assert.equal(component.get('getMarker')[0].longitude, location.longitude);
@@ -71,26 +70,27 @@ test('that multiple markers are displayed in map', function(assert) {
   let component = this.subject();
   let lats = [];
   let lngs = [];
-  for(let i=0; i < 3; i++){
+  for (let i = 0; i < 3; i++) {
     lats.push(latRandomizer());
     lngs.push(lngRandomizer());
   }
+
   let location1 = new Microsoft.Maps.Location(lats[0], lngs[0]);
   let location2 = new Microsoft.Maps.Location(lats[1], lngs[1]);
   let location3 = new Microsoft.Maps.Location(lats[2], lngs[2]);
   component.set('markers', [
     {
       lat: lats[0],
-      lng: lngs[0]
+      lng: lngs[0],
     },
     {
-      lat: lats[1], 
-      lng: lngs[1]
+      lat: lats[1],
+      lng: lngs[1],
     },
     {
       lat: lats[2],
-      lng: lngs[2]
-    }
+      lng: lngs[2],
+    },
     ]);
 
   this.render();
@@ -105,7 +105,7 @@ test('that multiple markers are displayed in map', function(assert) {
     assert.equal(component.get('getMarker')[2].latitude, location3.latitude);
     assert.equal(component.get('getMarker')[2].longitude, location3.longitude);
 
-    for(let i = 0; i < component.markers.length; i++) {
+    for (let i = 0; i < component.markers.length; i++) {
       assert.equal(map.entities.get(i)._location.latitude, component.markers[i].lat);
       assert.equal(map.entities.get(i)._location.longitude, component.markers[i].lng);
     }
@@ -114,9 +114,9 @@ test('that multiple markers are displayed in map', function(assert) {
 
 test("that the map's center", function(assert) {
   let component = this.subject();
-  this.render();  
+  this.render();
   Ember.run(function() {
-    component.set('lat', latRandomizer()); 
+    component.set('lat', latRandomizer());
     component.set('lng', lngRandomizer());
     component.createMap();
     let map = component.get('map');
@@ -161,20 +161,20 @@ test('that map is drawing polygon and changing color', function(assert) {
   component.set('polygonLocation', {
     location1:{
       lat:latRandomizer(),
-      lng: lngRandomizer()
+      lng: lngRandomizer(),
     },
     location2:{
       lat:latRandomizer(),
-      lng:lngRandomizer()
+      lng:lngRandomizer(),
     },
     location3:{
       lat:latRandomizer(),
-      lng: lngRandomizer()
+      lng: lngRandomizer(),
     },
     location4:{
       lat:latRandomizer(),
-      lng: lngRandomizer()
-    }
+      lng: lngRandomizer(),
+    },
   });
 
   component.set('fillColor', [Math.floor(Math.random() * 250), Math.floor(Math.random() * 250), Math.floor(Math.random() * 250), Math.floor(Math.random() * 250)]);
@@ -183,7 +183,7 @@ test('that map is drawing polygon and changing color', function(assert) {
 
   this.render();
 
-  Ember.run( function() {
+  Ember.run(function() {
     let polygonLocation = component.polygonLocation;
     let location1 = new Microsoft.Maps.Location(polygonLocation.location1.lat, polygonLocation.location1.lng);
     let location2 = new Microsoft.Maps.Location(polygonLocation.location2.lat, polygonLocation.location2.lng);
@@ -192,13 +192,13 @@ test('that map is drawing polygon and changing color', function(assert) {
     let vertices = new Array(location1, location2, location3, location4, location1);
     let polygonFillColor = component.fillColor;
     let polygonStrokeColor = component.strokeColor;
-    let polygon = new Microsoft.Maps.Polygon(vertices,{fillColor: polygonFillColor, strokeColor: polygonStrokeColor});
+    let polygon = new Microsoft.Maps.Polygon(vertices, { fillColor: polygonFillColor, strokeColor: polygonStrokeColor });
     component.set('createPolygon', polygon);
     component.createMap();
     let map = component.map;
 
     //Locations
-    for( let i=0; i>map.entities.get(0)._locations.length -1; i++ ) {
+    for (let i = 0; i > map.entities.get(0)._locations.length - 1; i++) {
       assert.equal(map.entities.get(0)._locations[i].latitude, polygon._locations[i].latitude);
       assert.equal(map.entities.get(0)._locations[i].longitude, polygon._locations[i].longitude);
     }

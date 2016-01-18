@@ -17,9 +17,10 @@ export default Ember.Component.extend({
 
   init() {
     this._super();
-    if(!config.bingAPI) {
+    if (!config.bingAPI) {
       throw('Missing BING API KEY');
     }
+
     this.api = Microsoft.Maps;
     this.map = null;
   },
@@ -53,14 +54,14 @@ export default Ember.Component.extend({
     let polygon = this.get('createPolygon');
     this.map = new Microsoft.Maps.Map(el, opts);
 
-    if(getMarker){
+    if (getMarker) {
       getMarker.forEach((location) => {
         let marker = new Microsoft.Maps.Pushpin(location);
         this.map.entities.push(marker); //add marker to map
-      }); 
+      });
     }
 
-    if(polygon){
+    if (polygon) {
       this.map.entities.push(polygon);
     }
 
@@ -70,23 +71,23 @@ export default Ember.Component.extend({
     this.map.dispose();
   },
 
-  getMarker: Ember.computed(function(){
-      if(this.markers){
-        let location=[];
-        this.get('markers').forEach((marker) => {
-          let lat = marker.lat;
-          let lng = marker.lng;
-          location.push(new Microsoft.Maps.Location(lat,lng));
-        });
-        return location;    
-      } else {
-        return null;
-      }
+  getMarker: Ember.computed(function() {
+    if (this.markers) {
+      let location = [];
+      this.get('markers').forEach((marker) => {
+        let lat = marker.lat;
+        let lng = marker.lng;
+        location.push(new Microsoft.Maps.Location(lat, lng));
+      });
+      return location;
+    } else {
+      return null;
+    }
   }),
 
-  createPolygon: Ember.computed(function(){
+  createPolygon: Ember.computed(function() {
     let polygonLocation = this.get('polygonLocation');
-    if(this.polygonLocation){
+    if (this.polygonLocation) {
       let location1 = new Microsoft.Maps.Location(polygonLocation.location1.lat, polygonLocation.location1.lng);
       let location2 = new Microsoft.Maps.Location(polygonLocation.location2.lat, polygonLocation.location2.lng);
       let location3 = new Microsoft.Maps.Location(polygonLocation.location3.lat, polygonLocation.location3.lng);
@@ -95,7 +96,7 @@ export default Ember.Component.extend({
       let vertices = new Array(location1, location2, location3, location4, location1);
       let fillColor = this.get('fillColor');
       let strokeColor = this.get('strokeColor');
-      if(fillColor && strokeColor) {
+      if (fillColor && strokeColor) {
         fillColor = new Microsoft.Maps.Color(fillColor[0], fillColor[1], fillColor[2], fillColor[3]);
         strokeColor = new Microsoft.Maps.Color(strokeColor[0], strokeColor[1], strokeColor[2], strokeColor[3]);
       } else {
@@ -103,11 +104,10 @@ export default Ember.Component.extend({
         strokeColor = new Microsoft.Maps.Color(100, 100, 0, 100);
       }
 
-      let polygon = new Microsoft.Maps.Polygon(vertices,{fillColor: fillColor, strokeColor: strokeColor});
+      let polygon = new Microsoft.Maps.Polygon(vertices, { fillColor: fillColor, strokeColor: strokeColor });
       return polygon;
     } else {
       return null;
     }
-  })
-
+  }),
 });
